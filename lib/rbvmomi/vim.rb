@@ -30,9 +30,14 @@ class VIM < Connection
     rev_given = opts[:rev] != nil
     opts[:rev] = '4.0' unless rev_given
     opts[:debug] = (!ENV['RBVMOMI_DEBUG'].empty? rescue false) unless opts.member? :debug
+    opts[:cookie] ||= nil
 
     new(opts).tap do |vim|
-      vim.serviceContent.sessionManager.Login :userName => opts[:user], :password => opts[:password]
+      if(opts[:cookie])
+        vim.cookie = opts[:cookie]
+      else
+        vim.serviceContent.sessionManager.Login :userName => opts[:user], :password => opts[:password]
+      end
       unless rev_given
         rev = vim.serviceContent.about.apiVersion
         vim.rev = [rev, '5.0'].min

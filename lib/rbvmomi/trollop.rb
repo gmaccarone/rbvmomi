@@ -24,6 +24,7 @@ class Parser
   #  password: -p --password RBVMOMI_PASSWORD ()
   #  path: --path RBVMOMI_PATH (/sdk)
   #  debug: -d --debug RBVMOMI_DEBUG (false)
+  #  cookie: -c --cookie COOKIE (false)
   def rbvmomi_connection_opts
     opt :host, "host", :type => :string, :short => 'o', :default => ENV['RBVMOMI_HOST']
     opt :port, "port", :type => :int, :short => :none, :default => (ENV.member?('RBVMOMI_PORT') ? ENV['RBVMOMI_PORT'].to_i : 443)
@@ -33,6 +34,7 @@ class Parser
     opt :password, "password", :short => 'p', :default => (ENV['RBVMOMI_PASSWORD'] || '')
     opt :path, "SOAP endpoint path", :short => :none, :default => (ENV['RBVMOMI_PATH'] || '/sdk')
     opt :debug, "Log SOAP messages", :short => 'd', :default => (ENV['RBVMOMI_DEBUG'] || false)
+    opt :cookie, "Session Cookie", :short => 'c', :default => (ENV['COOKIE'] || false)
   end
 
   # Select a datacenter
